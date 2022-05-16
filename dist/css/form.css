@@ -7,27 +7,39 @@ body {
   background-color: #0D1117;
 }
 
-.content {
-  border: 1px solid #30363D;
-  border-radius: 5px;
-  padding: 5px;
+body {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(2);
-  background-color: #0D1117;
-  text-align: center;
 }
 
-.button {
-  width: 100%;
+.form {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 5px;
+  text-align: center;
+  padding: 5px;
+}
+
+.title {
+  margin: auto;
 }
 
 .redirect {
   font-size: 75%;
+  margin: auto;
+}
+
+.error {
+  font-size: 50%;
+  color: #ff2020;
+  word-wrap: break-word;
+}
+
+button {
+  width: 100%;
 }
 
 .row {
   margin: 5px;
-  text-align: center;
 }

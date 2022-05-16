@@ -32,7 +32,7 @@ body {
   border-radius: 3px;
   transition: transform 0.2s;
   color: #E8F7EE;
-  border: 1px solid #30363D;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 .button-style-b:hover {
   cursor: pointer;
@@ -41,7 +41,7 @@ body {
 
 .input-style-a {
   background-color: #0D1117;
-  border: 1px solid #30363D;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 3px;
   text-align: center;
 }
