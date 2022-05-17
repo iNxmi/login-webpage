@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+include("dist/php/functions.php");
+include("dist/php/connection.php");
+
+$user_data = check_login($con);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,17 +21,7 @@
 </head>
 
 <body>
-    <div class="form">
-        <div class="row">
-            <h1 class="title">Welcome to <a href="https://github.com/iNxmi/" target="_blank">Nami</a></h1>
-        </div>
-        <div class="row">
-            <button class="button-style-b button" type="button" onclick="location.href='login.php'">Login</button>
-        </div>
-        <div class="row">
-            <button class="button-style-a button" type="button" onclick="location.href='register.php'">Register</button>
-        </div>
-    </div>
+    <h1><?php echo $user_data['username'];   ?></h1>
 </body>
 
 </html>

@@ -10,14 +10,20 @@ function init()
 
     $username = prepare_input($_POST["username"]);
     $email = strtolower(prepare_input($_POST["email"]));
-    $password = prepare_input($_POST["password"]);
-    $password_repeat = prepare_input($_POST["password-repeat"]);
+    $password = hash("sha256", prepare_input($_POST["password"]));
+    $password_repeat = hash("sha256", prepare_input($_POST["password-repeat"]));
 
     if (empty($username) or empty($email) or empty($password) or empty($password_repeat))
         return "Please fill out every field";
 
+    if (strlen($username) < 3 or strlen($username) > 16)
+        return "Username has to be 3-16 characters";
+
     if (!filter_var($email, FILTER_VALIDATE_EMAIL))
         return "E-Mail is invalid";
+
+    if (strlen($password) < 6 or strlen($password) > 64)
+        return "Password has to be 6-64 characters";
 
     if ($password != $password_repeat)
         return "Passwords don't match";
@@ -28,9 +34,11 @@ function init()
     if ($count != 0)
         return "Email is already in use";
 
-    $query = "insert intor users (username, email, password) values ('$username', '$email', '$password')";
+    $uuid = substr(md5($email), 0, 32);
+    $query = "insert into users (uuid, username, email, password) values ('$uuid', '$username', '$email', '$password')";
     mysqli_query($con, $query);
 
+    header("Location: login.php");
     die();
 }
 

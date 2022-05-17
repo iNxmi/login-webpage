@@ -1,7 +1,7 @@
 <?php
+session_start();
 
 $error = init();
-
 function init()
 {
     include("dist/php/connection.php");
@@ -9,8 +9,8 @@ function init()
     if ($_SERVER["REQUEST_METHOD"] != "POST")
         return;
 
-    $email = prepare_input($_POST["email"]);
-    $password = prepare_input($_POST["password"]);
+    $email = strtolower(prepare_input($_POST["email"]));
+    $password = hash("sha256", prepare_input($_POST["password"]));
 
     if (empty($email) or empty($password))
         return "Please fill out every field";
@@ -18,17 +18,19 @@ function init()
     if (!filter_var($email, FILTER_VALIDATE_EMAIL))
         return "E-Mail is invalid";
 
-    $query = "select * from users where email = '$email'";
+    $query = "select * from users where email = '$email' limit 1";
     $result = mysqli_query($con, $query);
     $count = mysqli_num_rows($result);
     if ($count == 0)
         return "Email and password doesn't match";
 
-    $data = mysqli_fetch_assoc($result);
-    if ($data['password'] != $password)
+    $user_data = mysqli_fetch_assoc($result);
+    if ($user_data['password'] != $password)
         return "Email and password doesn't match";
 
-    return;
+    $_SESSION['uuid'] = $user_data['uuid'];
+    header("Location: index.php");
+    die();
 }
 
 function prepare_input($data)
