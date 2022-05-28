@@ -4,21 +4,22 @@ session_start();
 $error = init();
 function init()
 {
-    include("dist/php/connection.php");
-
     if ($_SERVER["REQUEST_METHOD"] != "POST")
         return;
 
-    $email = strtolower(prepare_input($_POST["email"]));
+    $nOm = strtolower(prepare_input($_POST["email"]));
     $password = hash("sha256", prepare_input($_POST["password"]));
 
-    if (empty($email) or empty($password))
+    if (empty($nOm) or empty($password))
         return "Please fill out every field";
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL))
-        return "E-Mail is invalid";
+    if (filter_var($nOm, FILTER_VALIDATE_EMAIL))
+        $query = "select * from users where email = '$nOm' limit 1";
+    else
+        $query = "select * from users where username = '$nOm' limit 1";
 
-    $query = "select * from users where email = '$email' limit 1";
+    include("php/connection.php");
+
     $result = mysqli_query($con, $query);
     $count = mysqli_num_rows($result);
     if ($count == 0)
@@ -47,8 +48,8 @@ function prepare_input($data)
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="dist/css/styles.css">
-    <link rel="stylesheet" href="dist/css/form.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/form.css">
 
     <title>Login</title>
 </head>
@@ -58,7 +59,7 @@ function prepare_input($data)
         <h1 class="title">Login</h1>
         <form action="login.php" method="post" autocomplete="off">
             <div class="row">
-                <input class="input-style-a" name="email" type="email" placeholder="E-Mail">
+                <input class="input-style-a" name="email" type="text" placeholder="Username or E-Mail">
             </div>
             <div class="row">
                 <input class="input-style-a" name="password" type="password" placeholder="Password">
@@ -71,7 +72,5 @@ function prepare_input($data)
         <p class="redirect">No Account? <a class="ahref-style-a" href="register.php">Register</a></p>
     </div>
 </body>
-
-<script src="js/login.js"></script>
 
 </html>

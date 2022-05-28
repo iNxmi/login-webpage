@@ -1,0 +1,21 @@
+@import "./variables";
+
+.navbar {
+    background-color: lighter(.1);
+    overflow: hidden;
+}
+
+.navbar a {
+    float: left;
+    padding: 5px 10px;
+    text-decoration: none;
+    transition: background-color .7s ease;
+
+    &:hover {
+        background-color: lighter(.1);
+    }
+}
+
+.navbar-right {
+    float: right;
+}

@@ -3,8 +3,6 @@ $error = init();
 
 function init()
 {
-    include("dist/php/connection.php");
-
     if ($_SERVER["REQUEST_METHOD"] != "POST")
         return;
 
@@ -28,13 +26,21 @@ function init()
     if ($password != $password_repeat)
         return "Passwords don't match";
 
+    include("php/connection.php");
+
+    $query = "select * from users where username = '$username'";
+    $result = mysqli_query($con, $query);
+    $count = mysqli_num_rows($result);
+    if ($count != 0)
+        return "Username is already in use";
+
     $query = "select * from users where email = '$email'";
     $result = mysqli_query($con, $query);
     $count = mysqli_num_rows($result);
     if ($count != 0)
         return "Email is already in use";
 
-    $uuid = substr(md5($email), 0, 32);
+    $uuid = md5(microtime(true));
     $query = "insert into users (uuid, username, email, password) values ('$uuid', '$username', '$email', '$password')";
     mysqli_query($con, $query);
 
@@ -56,8 +62,8 @@ function prepare_input($data)
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="dist/css/styles.css">
-    <link rel="stylesheet" href="dist/css/form.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/form.css">
 
     <title>Register</title>
 </head>

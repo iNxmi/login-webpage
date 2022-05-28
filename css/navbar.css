@@ -1,0 +1,18 @@
+.navbar {
+  background-color: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.navbar a {
+  float: left;
+  padding: 5px 10px;
+  text-decoration: none;
+  transition: background-color 0.7s ease;
+}
+.navbar a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-right {
+  float: right;
+}

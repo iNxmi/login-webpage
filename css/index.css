@@ -1,0 +1,60 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #E8F7EE;
+}
+
+body {
+  background-color: #0D1117;
+  zoom: 200%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#secret {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+#background-video {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 90%;
+  box-shadow: 0 0 15px 15px red;
+  -webkit-animation: videoShadow 1.5s alternate infinite;
+          animation: videoShadow 1.5s alternate infinite;
+}
+
+@-webkit-keyframes videoShadow {
+  0% {
+    box-shadow: 0 0 15px 15px red;
+  }
+  50% {
+    box-shadow: 0 0 15px 15px green;
+  }
+  100% {
+    box-shadow: 0 0 15px 15px blue;
+  }
+}
+
+@keyframes videoShadow {
+  0% {
+    box-shadow: 0 0 15px 15px red;
+  }
+  50% {
+    box-shadow: 0 0 15px 15px green;
+  }
+  100% {
+    box-shadow: 0 0 15px 15px blue;
+  }
+}
