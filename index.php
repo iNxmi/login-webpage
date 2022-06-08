@@ -45,6 +45,7 @@ $user_data = check_login();
             <a href="projects.php">Projects</a>
             <a href="#">Contact</a>
             <a href="about.php">About</a>
+            <a href="command.php">Command</a>
             <div class="navbar-right">
                 <a href="profile.php"><i class="fa-solid fa-user"></i> <?php echo $user_data['username'] ?></a>
             </div>

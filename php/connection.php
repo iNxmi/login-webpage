@@ -1,8 +1,8 @@
 <?php
 
 $db_host = "localhost";
-//$db_user = "web381";
-//$db_password = "a3vjU70K";
+// $db_user = "web381";
+// $db_password = "a3vjU70K";
 $db_user = "root";
 $db_password = "";
 $db_name = "usr_web381_1";

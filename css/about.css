@@ -1,0 +1,31 @@
+.title {
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+}
+
+.chapter {
+  width: 50%;
+  height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.dialogue-left {
+  text-align: left;
+  word-wrap: break-word;
+  margin: 0;
+  padding: 0;
+}
+
+.dialogue-right {
+  text-align: right;
+  word-wrap: break-word;
+  margin: 0;
+  padding: 0;
+}

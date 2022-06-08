@@ -7,8 +7,9 @@ function init()
     if ($_SERVER["REQUEST_METHOD"] != "POST")
         return;
 
+    include("php/functions.php");
     $nOm = strtolower(prepare_input($_POST["email"]));
-    $password = hash("sha256", prepare_input($_POST["password"]));
+    $password = prepare_input($_POST["password"]);
 
     if (empty($nOm) or empty($password))
         return "Please fill out every field";
@@ -26,17 +27,12 @@ function init()
         return "Email and password doesn't match";
 
     $user_data = mysqli_fetch_assoc($result);
-    if ($user_data['password'] != $password)
+    if (!password_verify($password, $user_data['password']))
         return "Email and password doesn't match";
 
     $_SESSION['uuid'] = $user_data['uuid'];
     header("Location: index.php");
     die();
-}
-
-function prepare_input($data)
-{
-    return htmlspecialchars(stripslashes(trim($data)));
 }
 
 ?>

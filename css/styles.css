@@ -45,6 +45,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 3px;
   text-align: center;
+  outline: none;
 }
 
 .ahref-style-a {
@@ -53,4 +54,13 @@ body {
 }
 .ahref-style-a:hover {
   text-decoration: underline;
+}
+
+.textarea-style-a {
+  background-color: #0D1117;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+  text-align: left;
+  color: #892F78;
+  outline: none;
 }

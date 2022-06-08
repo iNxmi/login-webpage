@@ -2,10 +2,14 @@
 
 session_start();
 
-include("php/connection.php");
 include("php/functions.php");
 
-$user_data = check_login($con);
+$user_data = check_login();
+
+$error = init();
+function init()
+{
+}
 
 ?>
 
@@ -24,56 +28,24 @@ $user_data = check_login($con);
 
 <body>
     <main>
-        <div class="change-information">
-            <div class="form">
-                <h2 class="title">Username</h2>
-                <form action="profile.php" method="post" autocomplete="off">
-                    <div>
-                        <input class="input-style-a" name="new-username" type="text" placeholder="New Username">
-                    </div>
-                    <div>
-                        <input class="input-style-a" name="password" type="password" placeholder="Password">
-                    </div>
-                    <input name="type" type="hidden" value="username">
-                    <div>
-                        <button class="button-style-a button" type="submit">Submit</button>
-                    </div>
-                </form>
-            </div>
-            <div class="form">
-                <h2 class="title">E-Mail</h2>
-                <form action="profile.php" method="post" autocomplete="off">
-                    <div>
-                        <input class="input-style-a" name="new-email" type="text" placeholder="New E-Mail">
-                    </div>
-                    <div>
-                        <input class="input-style-a" name="password" type="password" placeholder="Password">
-                    </div>
-                    <input name="type" type="hidden" value="email">
-                    <div>
-                        <button class="button-style-a button" type="submit">Submit</button>
-                    </div>
-                </form>
-            </div>
-            <div class="form">
-                <h2 class="title">Password</h2>
-                <form action="profile.php" method="post" autocomplete="off">
-                    <div>
-                        <input class="input-style-a" name="new-password" type="text" placeholder="New Password">
-                    </div>
-                    <div>
-                        <input class="input-style-a" name="new-password" type="text" placeholder="New Password-Repeat">
-                    </div>
-                    <div>
-                        <input class="input-style-a" name="password" type="password" placeholder="Current Password">
-                    </div>
-                    <input name="type" type="hidden" value="password">
-                    <div>
-                        <button class="button-style-a button" type="submit">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+        <p>UUID: <?php echo $user_data['uuid'] ?></p>
+        <p>Username: <?php echo $user_data['username'] ?> <a href="change-username.php">change</a></p>
+        <p>Email: <?php echo $user_data['email'] ?> <a href="change-email.php">change</a></p>
+        <p>Password: <?php echo $user_data['password'] ?> <a href="change-password.php">change</a></p>
+        <p>Creation-Date: <?php echo $user_data['creation_date'] ?></p>
+        <p>PFP: <a href="change-pfp.php">change</a></p>
+        <?php
+
+        if (file_exists("userdata/pfp/" . $user_data['uuid'] . ".jpg"))
+            echo "penis";
+        else
+            echo "not penis";
+
+        ?>
+        <br>
+        <a style="color: red;" href="logout.php">log out</a>
+        <br><br><br><br>
+        <a style="color: red;" href="delete-account.php">delete account</a>
     </main>
 </body>
 

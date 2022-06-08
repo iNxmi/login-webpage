@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 include("php/functions.php");
 
 $data = check_login();

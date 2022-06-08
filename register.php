@@ -6,22 +6,26 @@ function init()
     if ($_SERVER["REQUEST_METHOD"] != "POST")
         return;
 
+    include("php/functions.php");
     $username = prepare_input($_POST["username"]);
     $email = strtolower(prepare_input($_POST["email"]));
-    $password = hash("sha256", prepare_input($_POST["password"]));
-    $password_repeat = hash("sha256", prepare_input($_POST["password-repeat"]));
+    $password = prepare_input($_POST["password"]);
+    $password_repeat = prepare_input($_POST["password-repeat"]);
 
     if (empty($username) or empty($email) or empty($password) or empty($password_repeat))
         return "Please fill out every field";
 
-    if (strlen($username) < 3 or strlen($username) > 16)
-        return "Username has to be 3-16 characters";
+    $val_usrn = validate_username($username);
+    if ($val_usrn != null)
+        return $val_usrn;
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL))
-        return "E-Mail is invalid";
+    $val_email = validate_email($email);
+    if ($val_email != null)
+        return $val_email;
 
-    if (strlen($password) < 6 or strlen($password) > 64)
-        return "Password has to be 6-64 characters";
+    $val_pass = validate_password($password);
+    if ($val_pass != null)
+        return $val_pass;
 
     if ($password != $password_repeat)
         return "Passwords don't match";
@@ -40,17 +44,13 @@ function init()
     if ($count != 0)
         return "Email is already in use";
 
+    $password_hash = hash_password($password);
     $uuid = md5(microtime(true));
-    $query = "insert into users (uuid, username, email, password) values ('$uuid', '$username', '$email', '$password')";
+    $query = "insert into users (uuid, username, email, password) values ('$uuid', '$username', '$email', '$password_hash')";
     mysqli_query($con, $query);
 
     header("Location: login.php");
     die();
-}
-
-function prepare_input($data)
-{
-    return htmlspecialchars(stripslashes(trim($data)));
 }
 
 ?>

@@ -1,0 +1,9 @@
+.command-input {
+  text-align: center;
+}
+
+#console {
+  overflow: scroll;
+  resize: none;
+  width: 75%;
+}

@@ -1,0 +1,73 @@
+<?php
+
+session_start();
+include("php/functions.php");
+$user_data = check_login();
+
+$error = init($user_data);
+function init($user_data)
+{
+    if ($_SERVER["REQUEST_METHOD"] != "POST")
+        return;
+
+    $new_email = strtolower(prepare_input($_POST['new-email']));
+    $password = prepare_input($_POST['password']);
+
+    if (empty($new_email) or empty($password))
+        return "Please fill out every field";
+
+    $val_mail = validate_email($new_email);
+    if ($val_mail != null)
+        return $val_mail;
+
+    include("php/connection.php");
+    $query = "select * from users where email = '$new_email'";
+    $result = mysqli_query($con, $query);
+    $count = mysqli_num_rows($result);
+    if ($count != 0)
+        return "E-Mail is already in use";
+
+    if (!password_verify($password, $user_data['password']))
+        return "wrong password!";
+
+    $uuid = $user_data["uuid"];
+    $query = "UPDATE users SET email = '$new_email' WHERE uuid = '$uuid'";
+    mysqli_query($con, $query);
+
+    header("Location: profile.php");
+
+    die();
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Change Email - <?php echo $user_data['username'] ?></title>
+</head>
+
+<body>
+    <center>
+        <h1>change email</h1>
+        <hr>
+        <form action="change-email.php" method="post">
+            <input class="input-style-a" type="text" name="new-email" placeholder="new email">
+            <br>
+            <input class="input-style-a" type="password" name="password" placeholder="password">
+            <br>
+            <p style="color: red;"><?php echo $error ?></p>
+            <br>
+            <button class="button-style-a" type="submit">change</button>
+        </form>
+        <hr>
+        <p>nami inc.</p>
+    </center>
+</body>
+
+</html>
